@@ -21,7 +21,7 @@ spring:
 
 server:
   # 9000 端口--
-  port: 4000
+  port: 4100
 
 
 #mybatis 配置
