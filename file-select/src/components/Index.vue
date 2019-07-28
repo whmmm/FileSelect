@@ -1,6 +1,8 @@
 <template>
     <div>
-        <FileSelect :trigger="fileSelectTrigger" :limit="2" type="image" v-model="fileList"></FileSelect>
+        <FileSelect
+            :upload-url="uploadUrl"
+            :trigger="fileSelectTrigger" :limit="2" type="image" v-model="fileList"></FileSelect>
 
         <!--当前选择的文件或图片.-->
         <div style="display: flex;flex-wrap: wrap">
@@ -19,9 +21,11 @@
         mixins: [FileSelectMixin],
         name: 'Index',
         components: {FileSelect},
-        data () {
+        data() {
             return {
-                fileList: ['/upload/user_test/acae50971deffe006986d0580357776b.jpg', '/upload/user_test/983640b4e5ef2aca15758c73977cfb6b.jpg']
+                fileList: ['/upload/user_test/acae50971deffe006986d0580357776b.jpg',
+                    '/upload/user_test/983640b4e5ef2aca15758c73977cfb6b.jpg'],
+                uploadUrl:'localhost:8000/upload'
             }
         },
         mounted: function () {

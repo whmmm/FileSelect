@@ -15,12 +15,21 @@
             <div :style="{'height':height} " class="file-select-container">
                 <div v-if="k===0">
                     <!--上传-->
-                    <upload-file :type="type"></upload-file>
+                    <upload-file :type="type" :upload-url="uploadUrl"
+
+                    ></upload-file>
                 </div>
 
                 <div v-if="k===1">
                     <!--图片列表-->
-                    <list-file v-model="value" :trigger="trigger" ref="ListFile" :type="type" :limit="limit" :index="index"></list-file>
+                    <list-file v-model="value"
+                               :trigger="trigger"
+                               ref="ListFile"
+                               :type="type"
+                               :limit="limit"
+                               :index="index"
+
+                    ></list-file>
                 </div>
 
                 <div v-if="k===2">
@@ -100,7 +109,7 @@
             value: {
                 //一张图片是 string,多张是 array
                 type: [String, Array],
-                default () {
+                default() {
                     return []
                 }
             },
@@ -132,7 +141,7 @@
             // 加载列表的url
             listUrl: ''
         },
-        data () {
+        data() {
             return {
                 //功能列表
                 menuList: [],
@@ -160,13 +169,13 @@
                 }
             }
         },
-        created () {
+        created() {
 
             this.setMenuList()
 
         },
         methods: {
-            setMenuList () {
+            setMenuList() {
                 let self = this
 
                 switch (self.type) {
@@ -187,7 +196,7 @@
                 this.index = eval(v1.index)
             },
 
-            confirmSelect (index) {
+            confirmSelect(index) {
                 //文件或者图片列表.
                 if (index == 1) {
                     let fileList = this.$refs.ListFile[0].selectFileMap

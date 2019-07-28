@@ -131,9 +131,10 @@
             },
             limit: {type: Number, default: 1},
             fetchUrl: {type: String, default: '/upload/listFile'},
+            host: {type: String, default: 'localhost:8000'}
 
         },
-        data () {
+        data() {
             return {
                 //文件列表
                 fileList: [],
@@ -161,7 +162,7 @@
                 selectFileMap: {}
             }
         },
-        mounted () {
+        mounted() {
             let self = this
 
             self.requestParam.type = self.type
@@ -194,11 +195,12 @@
 
         },
         methods: {
-            loadData () {
+            loadData() {
                 let self = this
                 if (self.endPage < self.requestParam.page) {
                     console.log('%c开始执行 ajax 加载', 'background:orange;color:#fff')
-                    $.get(self.fetchUrl, self.requestParam, function (resp) {
+                    let getUrl = self.host + self.fetchUrl
+                    $.get(getUrl, self.requestParam, function (resp) {
                         if (resp != null && resp.fileList != null && resp.fileList.length > 0) {
                             self.requestParam.page++
                             if (resp != undefined) {
@@ -245,7 +247,7 @@
                     })
                 }
             },
-            changeType (type) {
+            changeType(type) {
                 this.viewType = type
                 //可能需要重拍数据..
             },
@@ -253,7 +255,7 @@
              * @param item
              * @param index 被废弃, 使用 item.srcIndex
              * */
-            select (item, index) {
+            select(item, index) {
                 if (this.limit == 1) {
                     // 限制为1 先删除旧的.
                     let prop = ''
@@ -292,7 +294,7 @@
                     delete this.selectFileMap[item.path]
                 }
             },
-            getObjLen (obj) {
+            getObjLen(obj) {
                 return Object.getOwnPropertyNames(obj).length
             },
 
@@ -301,7 +303,7 @@
              * @param i  所在原数组(fileList) 索引 以及 名字.
              * @param k  图片或者资源的 path (全路径.)..
              */
-            removeSelect (i, k) {
+            removeSelect(i, k) {
                 console.log(k)
 
                 if (i.index != null) {
@@ -314,7 +316,7 @@
                 }
 
             },
-            updateViewBack () {
+            updateViewBack() {
                 //获取从父组件传递的数组,或字符串.
                 let val = this.value
 
