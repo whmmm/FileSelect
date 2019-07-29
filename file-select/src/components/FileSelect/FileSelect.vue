@@ -15,7 +15,7 @@
             <div :style="{'height':height} " class="file-select-container">
                 <div v-if="k===0">
                     <!--上传-->
-                    <upload-file :type="type" :upload-url="uploadUrl"
+                    <upload-file :type="type" :host="host"
 
                     ></upload-file>
                 </div>
@@ -28,7 +28,7 @@
                                :type="type"
                                :limit="limit"
                                :index="index"
-
+                               :host="displayhost||host"
                     ></list-file>
                 </div>
 
@@ -139,7 +139,11 @@
             //上传文件的的 url
             uploadUrl: '',
             // 加载列表的url
-            listUrl: ''
+            listUrl: '',
+            // 主机地址(上传) 例如 http://localhost:8000
+            host: '',
+            // 主机地址(展示) 展示图片的 host 有时候 是反向代理服务器主机
+            displayhost: ''
         },
         data() {
             return {
@@ -197,6 +201,7 @@
             },
 
             confirmSelect(index) {
+                let host = this.displayhost || this.host;
                 //文件或者图片列表.
                 if (index == 1) {
                     let fileList = this.$refs.ListFile[0].selectFileMap
@@ -206,13 +211,13 @@
                         //只获取 1 个.
                         for (let prop in fileList) {
                             //只需要循环一次就好.
-                            img = prop
+                            img = host + prop
                             break
                         }
 
                     } else {
                         for (let prop in fileList) {
-                            img.push(prop)
+                            img.push(host + prop)
                         }
                     }
                     console.log(img)

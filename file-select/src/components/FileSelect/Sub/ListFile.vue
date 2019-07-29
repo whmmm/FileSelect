@@ -28,7 +28,7 @@
             <!--@click="select(i,k)"-->
             <div v-for="(i,k) in selectFileMap" :key="k" class="file-item">
                 <div style="height: 110px;overflow: hidden;display: flex">
-                    <img class="list-img" :src="k" style="align-self: flex-end;"/>
+                    <img class="list-img" :src="host + k" style="align-self: flex-end;"/>
                 </div>
                 <span style="text-align: center;cursor: pointer;background: rgb(61,161,219)"
                       class="text-overflow">{{i.fileName}}</span>
@@ -46,7 +46,7 @@
 
                 <div class="file-list-container" v-if="viewType==='list'">
                     <div v-for="(i,k) in fileList" :key="k" class="file-item" @click="select(i,k)">
-                        <img class="list-img" :src="'http://localhost:4000'+i.path" :preview="k"
+                        <img class="list-img" :src="host+i.path" :preview="k"
                              :preview-text="i.fileName"/>
                         <span style="margin-bottom: 0" class="text-overflow" v-html="i.fileName"></span>
 
@@ -66,7 +66,7 @@
                     <div class="file-list-container">
 
                         <div v-for="(i,k) in timelineObject[k]" :key="k" class="file-item" @click="select(i,k)">
-                            <img class="list-img" :src="'http://localhost:4000'+i.path" :preview="k"
+                            <img class="list-img" :src="host+i.path" :preview="k"
                                  :preview-text="i.fileName"/>
                             <span style="margin-bottom: 0" class="text-overflow" v-html="i.fileName"></span>
 
@@ -130,8 +130,10 @@
                 }
             },
             limit: {type: Number, default: 1},
-            fetchUrl: {type: String, default: '/upload/listFile'},
-            host: {type: String, default: 'localhost:8000'}
+            fetchUrl: {type: String, default: '/file/'},
+            // 主机访问 形式 http/https 开头
+            host: {type: String, default: 'http://localhost:8000'},
+
 
         },
         data() {
@@ -199,7 +201,7 @@
                 let self = this
                 if (self.endPage < self.requestParam.page) {
                     console.log('%c开始执行 ajax 加载', 'background:orange;color:#fff')
-                    let getUrl = self.host + self.fetchUrl
+                    let getUrl = self.host + self.fetchUrl + self.type
                     $.get(getUrl, self.requestParam, function (resp) {
                         if (resp != null && resp.fileList != null && resp.fileList.length > 0) {
                             self.requestParam.page++

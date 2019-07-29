@@ -1,7 +1,7 @@
 <template>
     <div>
         <FileSelect
-            :upload-url="uploadUrl"
+            :host="host"
             :trigger="fileSelectTrigger" :limit="2" type="image" v-model="fileList"></FileSelect>
 
         <!--当前选择的文件或图片.-->
@@ -25,7 +25,7 @@
             return {
                 fileList: ['/upload/user_test/acae50971deffe006986d0580357776b.jpg',
                     '/upload/user_test/983640b4e5ef2aca15758c73977cfb6b.jpg'],
-                uploadUrl:'localhost:8000/upload'
+                host:'http://localhost:8000'
             }
         },
         mounted: function () {

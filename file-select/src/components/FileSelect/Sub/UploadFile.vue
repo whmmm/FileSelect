@@ -65,9 +65,11 @@
         name: 'UploadFile',
         props: {
             type: {type: String, default: 'image'},
-            uploadUrl: {type: String, default: '/upload'}
+            uploadUrl: {type: String, default: '/file'},
+            // 主机访问 形式 http/https 开头
+            host: {type: String, default: 'http://localhost:8000'}
         },
-        data () {
+        data() {
             return {
                 uploadBtnId: 'webUploader_' + randomString_FileSelect(10),
 
@@ -77,11 +79,11 @@
             }
         },
         methods: {
-            triggerUploadBtn () {
+            triggerUploadBtn() {
                 let self = this
                 $('#' + self.uploadBtnId).find('.webuploader-element-invisible').trigger('click')
             },
-            startUpload () {
+            startUpload() {
                 this.listItem.forEach((item) => {
                     if (item.state === 0) {
                         item.state = 1
@@ -95,7 +97,7 @@
             }
         },
 
-        mounted () {
+        mounted() {
             let self = this
 
             /**
@@ -141,7 +143,7 @@
                 crop: false,
                 auto: false,
                 // 文件接收服务端。
-                server: self.uploadUrl,
+                server: self.host + self.uploadUrl,
                 // 选择文件的按钮。可选。
                 // 内部根据当前运行是创建，可能是input元素，也可能是flash.
                 pick: {
