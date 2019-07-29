@@ -2,9 +2,7 @@ package org.zero.uploadapi.controller
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.bind.annotation.*
 import org.zero.uploadapi.domain.dao.FileDao
 import org.zero.uploadapi.domain.entity.ResFileRequest
 import org.zero.uploadapi.domain.entity.ResFileResult
@@ -25,9 +23,11 @@ class IndexController {
     }
 
 
-    @RequestMapping("/upload/listFile")
+    @GetMapping("/file/{type}")
     @ResponseBody
-    fun listFile(resFileRequest: ResFileRequest): ResFileResult {
+    fun listFile(@PathVariable type: String,
+                 resFileRequest: ResFileRequest): ResFileResult {
+        resFileRequest.type = type
         return resFileService.getResFileResult(resFileRequest)
     }
 

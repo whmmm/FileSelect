@@ -3,6 +3,7 @@ package org.zero.uploadapi.controller
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.CrossOrigin
+import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.multipart.MultipartFile
@@ -21,7 +22,7 @@ class UploadController {
     /**
      *定义上传文件接口
      */
-    @RequestMapping("/upload")
+    @PostMapping("/file")
     @ResponseBody
     fun upload(file: MultipartFile?, request: HttpServletRequest): UploadResult {
         return uploadService.upload(file, request)
