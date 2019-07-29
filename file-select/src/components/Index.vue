@@ -1,16 +1,25 @@
 <template>
-    <div>
-        <FileSelect
-            :host="host"
-            :trigger="fileSelectTrigger" :limit="2" type="image" v-model="fileList"></FileSelect>
 
-        <!--当前选择的文件或图片.-->
-        <div style="display: flex;flex-wrap: wrap">
-            <div v-for="(i,k) in fileList" :key="k" style="width: 18%;margin:5px;">
-                <img :src="i" style="width: 100%"/>
-            </div>
+    <el-card class="box-card" style="margin-top:20px;margin-left:20px;margin-right:20px;" shadow="hover">
+        <div slot="header" class="clearfix">
+            <span>图片上传示例</span>
+            <el-button style="float: right; padding: 3px 0" type="text">操作按钮</el-button>
         </div>
-    </div>
+
+
+        <el-form ref="form" :model="form" label-width="80px">
+            <el-form-item label="图片上传">
+                <el-input v-model="form.name"></el-input>
+            </el-form-item>
+
+            <el-form-item>
+                <el-button type="primary" >立即创建</el-button>
+                <el-button>取消</el-button>
+            </el-form-item>
+        </el-form>
+
+    </el-card>
+
 
 </template>
 
@@ -23,9 +32,11 @@
         components: {FileSelect},
         data() {
             return {
-                fileList: ['/upload/user_test/acae50971deffe006986d0580357776b.jpg',
-                    '/upload/user_test/983640b4e5ef2aca15758c73977cfb6b.jpg'],
-                host:'http://localhost:8000'
+               form:{
+                   fileList: ['/upload/user_test/acae50971deffe006986d0580357776b.jpg',
+                       '/upload/user_test/983640b4e5ef2aca15758c73977cfb6b.jpg'],
+                   host:'http://localhost:8000'
+               }
             }
         },
         mounted: function () {
