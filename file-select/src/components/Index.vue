@@ -9,7 +9,9 @@
 
         <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="图片上传">
-                <el-input v-model="form.name"></el-input>
+
+                <file-select-wrapper></file-select-wrapper>
+
             </el-form-item>
 
             <el-form-item>
@@ -25,11 +27,12 @@
 
 <script>
     import {FileSelect, FileSelectMixin} from '@/FileSelect'
+    import FileSelectWrapper from "@/components/FileSelect/FileSelectWrapper";
 
     export default {
         mixins: [FileSelectMixin],
         name: 'Index',
-        components: {FileSelect},
+        components: {FileSelectWrapper, FileSelect},
         data() {
             return {
                form:{

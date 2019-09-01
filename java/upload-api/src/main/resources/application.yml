@@ -1,0 +1,34 @@
+# 上传文件路径
+upload-path: E:/upload-resource/upload # 上传文件夹.
+
+folder-path: E:/upload-resource  #定义静态资源文件夹
+
+# token
+upload-key: 72b3158c-a0f3-11e8-98d0-529269fb1459 # 定义上传的 key .
+
+# 上传文件主句
+upload-host: http://192.168.0.7
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/resource_manager?serverTimezone=GMT%2B8&useSSL=false&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 3
+      maximum-pool-size: 10
+  resources:
+    static-locations: file:${folder-path},classpath:static # 静态资源路径
+
+
+server:
+  # 9000 端口--
+  port: 8000
+
+
+#mybatis 配置
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
