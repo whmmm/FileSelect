@@ -114,6 +114,7 @@
                 }
             },
             trigger: {
+                /* 监听回显-已选中图片 */
                 type: Boolean,
                 default: false
             },
@@ -141,7 +142,12 @@
             // 加载列表的url
             listUrl: '',
             // 主机地址(上传) 例如 http://localhost:8000
-            host: '',
+            host: {
+                type: String,
+                default() {
+                    return 'http://localhost:8000'
+                }
+            },
             // 主机地址(展示) 展示图片的 host 有时候 是反向代理服务器主机
             displayhost: ''
         },

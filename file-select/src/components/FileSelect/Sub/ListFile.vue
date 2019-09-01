@@ -118,7 +118,7 @@
              * 真正要传递的 图片 url.
              */
             value: {
-                type: Array, default: () => {
+                type: [String, Array], default: () => {
                     return []
                 }
             },
@@ -164,6 +164,11 @@
                 selectFileMap: {}
             }
         },
+        created() {
+            if (this.trigger === true) {
+              this.updateViewBack()
+            }
+        },
         mounted() {
             let self = this
 
@@ -196,6 +201,7 @@
             })
 
         },
+
         methods: {
             loadData() {
                 let self = this
@@ -322,14 +328,22 @@
                 //获取从父组件传递的数组,或字符串.
                 let val = this.value
 
+                if (val == null || val.trim === '') {
+                    return
+                }
+
                 if (this.limit == 1) {
-                    this.selectFileMap[val] = null
+                    this.selectFileMap[val] = {
+                        index: null,
+                        fileName: val.replace(/[\s\S]+(?<=[/|\\])/, '')
+                    }
                 } else {
                     val.forEach((item) => {
                         let arr = item.split('/')
                         this.selectFileMap[item] = {index: null, fileName: arr.pop()}
                     })
                 }
+                console.log(this.selectFileMap)
                 console.log('%c回显数据更新完毕!', 'background:blue;color:#fff')
             }
         },
@@ -343,6 +357,7 @@
             trigger: function (newVal, oldVal) {
                 /*console.log(newVal)*/
                 if (newVal === true) {
+
                     this.updateViewBack()
                 }
             }

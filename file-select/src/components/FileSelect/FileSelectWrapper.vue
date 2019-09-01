@@ -13,7 +13,8 @@
             :visible.sync="dialogVisible">
 
             <file-select height="80%"
-
+                         v-model="img"
+                         :trigger="viewBackTrigger"
             />
         </el-dialog>
 
@@ -32,7 +33,9 @@
         components: {FileSelect},
         data() {
             return {
-                dialogVisible: false
+                dialogVisible: false,
+                img: '/upload/user_test/win10.jpg',
+                viewBackTrigger: false
             }
         },
         methods: {
@@ -46,6 +49,10 @@
 
                 }
             }
+        },
+        created() {
+            let self = this
+            self.viewBackTrigger = true
         }
     }
 </script>

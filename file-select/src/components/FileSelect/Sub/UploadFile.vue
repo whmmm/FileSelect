@@ -342,7 +342,7 @@
         display: inline-block;
         cursor: pointer;
         background: #007bff;
-        padding: 10px 15px;
+        padding: 2px 10px;
         color: #fff;
         text-align: center;
         border-radius: 3px;
