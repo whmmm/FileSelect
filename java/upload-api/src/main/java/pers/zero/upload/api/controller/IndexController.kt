@@ -3,7 +3,6 @@ package pers.zero.upload.api.controller
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
-import pers.zero.upload.api.domain.dao.FileDao
 import pers.zero.upload.api.domain.entity.ResFileRequest
 import pers.zero.upload.api.domain.entity.ResFileResult
 import pers.zero.upload.api.service.ResFileService
@@ -23,11 +22,11 @@ class IndexController {
     }
 
 
-    @GetMapping("/file/{type}")
+    @GetMapping("/file")
     @ResponseBody
-    fun listFile(@PathVariable type: String,
+    fun listFile(
                  resFileRequest: ResFileRequest): ResFileResult {
-        resFileRequest.type = type
+        // resFileRequest.type = type
         return resFileService.getResFileResult(resFileRequest)
     }
 

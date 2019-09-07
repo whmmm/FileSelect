@@ -1,13 +1,17 @@
 # 上传文件路径
 upload-path: E:/upload-resource/upload # 上传文件夹.
 
-folder-path: E:/upload-resource  #定义静态资源文件夹
+# 显示图片或其他资源的主机地址
+file-host: http://localhost:8000
 
-# token
+
+
+# token 暂时不起作用
 upload-key: 72b3158c-a0f3-11e8-98d0-529269fb1459 # 定义上传的 key .
 
-# 上传文件主句
-upload-host: http://192.168.0.7
+
+# 定义静态资源目录
+folder-path: E:/upload-resource
 
 spring:
   datasource:
@@ -20,7 +24,9 @@ spring:
       minimum-idle: 3
       maximum-pool-size: 10
   resources:
-    static-locations: file:${folder-path},classpath:static # 静态资源路径
+    static-locations:
+      - file:${folder-path}
+      - classpath:static # 静态资源路径
 
 
 server:

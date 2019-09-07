@@ -2,7 +2,9 @@
     <div class="list-container">
         <!--排列方式.-->
         <div class="view-type-select-div"
-             style="display: flex;justify-content: space-between;padding-top:3px;padding-bottom: 6px">
+             style="display: flex;
+             align-items: center;
+             justify-content: space-between;padding-top:3px;padding-bottom: 6px">
             <div style="padding-top: 3px">
                 <label style="align-self: center;margin-bottom: 0">
                     查看视图:
@@ -14,21 +16,30 @@
                       class="iconfont icon-jiugongge"
                       @click="changeType('list')"></span>
             </div>
-            <button @click="viewCurrentVisible=!viewCurrentVisible" class="btn btn-sm"
-                    :class="viewCurrentVisible?'btn-warning':'btn-primary'"
-                    style="font-size: 16px;cursor: pointer;margin-right:4px ">
+
+            <!--:class="viewCurrentVisible?'btn-warning':'btn-primary'"-->
+            <!-- style="font-size: 16px;cursor: pointer;margin-right:4px " -->
+            <el-button
+                plain
+                type="primary"
+                size="medium"
+                style="margin-right:5px;"
+                @click="viewCurrentVisible=!viewCurrentVisible"
+                >
                 {{viewCurrentVisible?'隐藏当前':'查看当前已选'}}
-            </button>
+            </el-button>
         </div>
+
 
 
         <!--当前已选择的图片列表.-->
         <div class="file-list-container view-selected-img-div"
              v-show="viewCurrentVisible&&getObjLen(selectFileMap)>1">
+            <el-divider></el-divider>
             <!--@click="select(i,k)"-->
             <div v-for="(i,k) in selectFileMap" :key="k" class="file-item">
                 <div style="height: 110px;overflow: hidden;display: flex">
-                    <img class="list-img" :src="host + k" style="align-self: flex-end;"/>
+                    <img class="list-img" :src=" k" style="align-self: flex-end;"/>
                 </div>
                 <span style="text-align: center;cursor: pointer;background: rgb(61,161,219)"
                       class="text-overflow">{{i.fileName}}</span>
@@ -36,6 +47,7 @@
                 <span @click="removeSelect(i,k)"
                       style="padding: 2px;position: absolute;right:0;top:0;cursor: pointer;background:rgba(255,0,0,0.6)">✖</span>
             </div>
+            <el-divider></el-divider>
         </div>
 
 
@@ -46,7 +58,7 @@
 
                 <div class="file-list-container" v-if="viewType==='list'">
                     <div v-for="(i,k) in fileList" :key="k" class="file-item" @click="select(i,k)">
-                        <img class="list-img" :src="host+i.path" :preview="k"
+                        <img class="list-img" :src="i.path" :preview="k"
                              :preview-text="i.fileName"/>
                         <span style="margin-bottom: 0" class="text-overflow" v-html="i.fileName"></span>
 
@@ -66,7 +78,7 @@
                     <div class="file-list-container">
 
                         <div v-for="(i,k) in timelineObject[k]" :key="k" class="file-item" @click="select(i,k)">
-                            <img class="list-img" :src="host+i.path" :preview="k"
+                            <img class="list-img" :src="i.path" :preview="k"
                                  :preview-text="i.fileName"/>
                             <span style="margin-bottom: 0" class="text-overflow" v-html="i.fileName"></span>
 
@@ -130,7 +142,7 @@
                 }
             },
             limit: {type: Number, default: 1},
-            fetchUrl: {type: String, default: '/file/'},
+            fetchUrl: {type: String, default: '/file'},
             // 主机访问 形式 http/https 开头
             host: {type: String, default: 'http://localhost:8000'},
 
@@ -166,7 +178,7 @@
         },
         created() {
             if (this.trigger === true) {
-              this.updateViewBack()
+                this.updateViewBack()
             }
         },
         mounted() {
@@ -207,39 +219,39 @@
                 let self = this
                 if (self.endPage < self.requestParam.page) {
                     console.log('%c开始执行 ajax 加载', 'background:orange;color:#fff')
-                    let getUrl = self.host + self.fetchUrl + self.type
+                    let getUrl = self.host + self.fetchUrl /* + self.type*/
                     $.get(getUrl, self.requestParam, function (resp) {
                         if (resp != null && resp.fileList != null && resp.fileList.length > 0) {
                             self.requestParam.page++
-                            if (resp != undefined) {
 
-                                resp.fileList.forEach((item) => {
 
-                                    item.selected = false
+                            resp.fileList.forEach((item) => {
 
-                                    //记录原索引.
-                                    item.srcIndex = self.fileList.length
+                                item.selected = false
 
-                                    if (self.selectFileMap[item.path] != null) {
-                                        self.selectFileMap[item.path].index = item.srcIndex
-                                        item.selected = true
-                                    }
+                                //记录原索引.
+                                item.srcIndex = self.fileList.length
 
-                                    //添加到文件列表.
-                                    let i = self.fileList.push(item)
+                                if (self.selectFileMap[item.path] != null) {
+                                    self.selectFileMap[item.path].index = item.srcIndex
+                                    item.selected = true
+                                }
 
-                                    let newItem = self.fileList[i - 1]
+                                //添加到文件列表.
+                                let i = self.fileList.push(item)
 
-                                    //添加到时间轴 文件列表.
-                                    let uploadTime = item.uploadTime.substr(0, 10)
-                                    let arr = self.timelineObject[uploadTime]
-                                    if (arr == null) {
-                                        arr = self.timelineObject[uploadTime] = []
-                                    }
-                                    arr.push(newItem)
+                                let newItem = self.fileList[i - 1]
 
-                                })
-                            }
+                                //添加到时间轴 文件列表.
+                                let uploadTime = item.uploadTime.substr(0, 10)
+                                let arr = self.timelineObject[uploadTime]
+                                if (arr == null) {
+                                    arr = self.timelineObject[uploadTime] = []
+                                }
+                                arr.push(newItem)
+
+                            })
+
                         } else {
                             self.endPage = self.requestParam.page
                         }
@@ -277,7 +289,10 @@
                     }
                     if (prop != '') {
                         let file = this.fileList[index2.index]
-                        file.selected = false
+                        if (file != null) {
+                            file.selected = false
+                        }
+
                         this.selectFileMap[prop] = null
                         delete this.selectFileMap[prop]
                     }
@@ -327,11 +342,9 @@
             updateViewBack() {
                 //获取从父组件传递的数组,或字符串.
                 let val = this.value
-
                 if (val == null || val.trim === '') {
                     return
                 }
-
                 if (this.limit == 1) {
                     this.selectFileMap[val] = {
                         index: null,
@@ -347,7 +360,6 @@
                 console.log('%c回显数据更新完毕!', 'background:blue;color:#fff')
             }
         },
-
         watch: {
             index: function (newVal) {
                 if (newVal == 1) {
@@ -369,8 +381,8 @@
     .view-selected-img-div {
         padding-top: 5px;
         padding-bottom: 5px;
-        border-top: 2px dashed #3da1db;
-        border-bottom: 2px dashed #3da1db;
+      /*  border-top: 2px dashed #3da1db;
+        border-bottom: 2px dashed #3da1db;*/
         margin-top: 5px;
         margin-bottom: 5px
     }

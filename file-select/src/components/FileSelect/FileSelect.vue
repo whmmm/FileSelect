@@ -39,8 +39,12 @@
 
             <div v-if="k==1 || k==2">
                 <div style="float:right;margin-top: 5px;">
-                    <button class="btn btn-success" style="margin-right:15px;" @click="confirmSelect(index)">确认</button>
-                    <button class="btn btn-danger">取消</button>
+                    <el-button
+                        size="medium"
+                        plain type="success"
+                        style="margin-right:10px;" @click="confirmSelect(index)">确认
+                    </el-button>
+                    <el-button plain type="warning" size="medium" @click="cancelSelect">取消</el-button>
                 </div>
             </div>
 
@@ -208,6 +212,8 @@
 
             confirmSelect(index) {
                 let host = this.displayhost || this.host;
+                // 修改 此方法，后台直接返回 全路径！
+                host = '';
                 //文件或者图片列表.
                 if (index == 1) {
                     let fileList = this.$refs.ListFile[0].selectFileMap
@@ -226,13 +232,16 @@
                             img.push(host + prop)
                         }
                     }
-                    console.log(img)
+                    // console.log(img)
                     // limit 为 1张时,就是一个 字符串,多张是 ,是一个数组.
-                    this.$emit('selectImage', img)
+                    this.$emit('selectimage', img)
 
                 } else if (index == 2) {
                     //在线选择.
                 }
+            },
+            cancelSelect() {
+                this.$emit("cancelimage")
             }
         }
     }
