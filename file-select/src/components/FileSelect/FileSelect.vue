@@ -16,7 +16,7 @@
                 <div v-if="k===0">
                     <!--上传-->
                     <upload-file :type="type" :host="host"
-
+                                 @uploadsuccess="uploadSuccess"
                     ></upload-file>
                 </div>
 
@@ -242,6 +242,9 @@
             },
             cancelSelect() {
                 this.$emit("cancelimage")
+            },
+            uploadSuccess(img) {
+                this.$refs['ListFile'][0].unshiftImage(img)
             }
         }
     }

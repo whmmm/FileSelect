@@ -12,7 +12,8 @@
         "test": "npm run unit && npm run e2e",
         "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
         "build": "node build/build.js",
-        "build-component": "webpack --display-error-details --config build/build_component.js"
+        "build-component": "webpack --display-error-details --config build/build_component.js",
+        "build-wrapper": "webpack --display-error-details --config build-component/build-wrapper.js"
     },
     "dependencies": {
         "bootstrap": "^4.1.3",

@@ -8,8 +8,9 @@
             </span>
 
             <div>
-                <button class="btn" id="addImage" @click="triggerUploadBtn">继续添加</button>
-                <button style="margin-left: 5px" class="btn btn-primary" @click="startUpload()">开始上传</button>
+                <el-button palin size='small' id="addImage" @click="triggerUploadBtn">继续添加</el-button>
+                <el-button plain size="small" type="primary" style="margin-left: 5px" @click="startUpload()">开始上传
+                </el-button>
             </div>
         </div>
 
@@ -190,6 +191,12 @@
                 console.log(resp)
                 let item = self.listItem[KeyMap[file.id]]
                 if (resp.state === 'success') {
+                    // 上传成功 通知 fileSelect 组件 添加 图片--
+                    self.$emit('uploadsuccess', {
+                        path: resp.filePath,
+                        fileName: file.name,
+                        srcIndex: 0
+                    });
                     item.state = 2
                 } else if (resp.state === 'warning') {
                     item.state = 4

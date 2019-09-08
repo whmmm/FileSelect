@@ -88,13 +88,16 @@ open class ResFileServiceImpl : ResFileService {
             }
 
             //相对于服务器的绝对路径.
-            resFile.path = "/upload/${AppValue.UserKey}/$srcName"
+            resFile.path = AppValue.FileHost + "/upload/${AppValue.UserKey}/$srcName"
+
             //默认为图片上传类型.
             resFile.type = 1
             resFile.fileName = srcName
             resFile.userKey = AppValue.UserKey
             resFile.dirPath = savePath
 
+            // 设置响应路径
+            uploadResult.filePath = resFile.path
             try {
                 val path = Paths.get(savePath)
                 if (!Files.exists(path)) {
@@ -115,6 +118,7 @@ open class ResFileServiceImpl : ResFileService {
         }
 
         //println(AppValue.UploadPath)
+
 
         return uploadResult
 

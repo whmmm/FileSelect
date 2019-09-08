@@ -1,7 +1,8 @@
 <template>
     <div class="pers-el-upload-dialog-wrapper">
 
-        <el-button type="primary" size="small"
+        <el-button :type="type" :size="size"
+                   :plain="plain"
                    @click="toggleDialog"
         >点击选择图片
         </el-button>
@@ -70,6 +71,21 @@
             value: {
                 type: [String, Array],
                 default: ''
+            },
+            /**
+             * button 类型
+             * */
+            type: {
+                type: String,
+                default: 'primary'
+            },
+            plain: {
+                type: Boolean,
+                default: false
+            },
+            size: {
+                type: String,
+                default: 'medium '
             }
         },
         data() {

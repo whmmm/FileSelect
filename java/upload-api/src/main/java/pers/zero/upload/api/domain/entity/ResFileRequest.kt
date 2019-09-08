@@ -6,11 +6,16 @@ import pers.zero.upload.api.core.AppValue
  * 搜索文件请求.
  */
 class ResFileRequest {
+
+    /**
+     * 文件类型
+     */
     var type: String = ""
 
     var sqlType: Int = 1
 
     var userKey: String = ""
+
 
     /**
      * 初始化信息.分页,在数据中的类型等等.

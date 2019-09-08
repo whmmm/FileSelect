@@ -11,6 +11,10 @@
             <el-form-item label="图片上传">
 
                 <file-select-wrapper
+                    type="primary"
+                    plain
+                    size="small"
+
                     :limit="2"
                     host="http://localhost:8000"
                     v-model="form.fileList"/>

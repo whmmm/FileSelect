@@ -1,17 +1,14 @@
 # 上传文件路径
 upload-path: E:/upload-resource/upload # 上传文件夹.
 
+# 定义静态资源目录
+folder-path: E:/upload-resource
+
 # 显示图片或其他资源的主机地址
 file-host: http://localhost:8000
 
-
-
 # token 暂时不起作用
 upload-key: 72b3158c-a0f3-11e8-98d0-529269fb1459 # 定义上传的 key .
-
-
-# 定义静态资源目录
-folder-path: E:/upload-resource
 
 spring:
   datasource:
